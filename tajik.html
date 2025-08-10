@@ -110,7 +110,7 @@
     <div id="quiz-container">
       <!-- Quiz content will be injected here -->
     </div>
-    <button class="next-btn" id="next-btn">Оғози тестҳо</button>
+    <button class="next-btn" id="next-btn">Пас</button>
     <a href="index.html" class="back-btn">Баргашт ба Саҳифаи Асосӣ</a>
   </main>
   <footer>
@@ -118,87 +118,85 @@
   </footer>
 
 <script>
-  const quizData = [
-    {
-      question: "Тарҷумаи "бобо" дар забони англисӣ чист?",
-      options: ["Father", "Mother", "Grandfather", "Sister"],
-      correct: 2
-    },
-    {
-      question: "Фарзанди падари шумо?",
-      options: ["Mother", "Grandmother", "Brother", "Uncle"],
-      correct: 2
-    },
-    {
-      question: "Апа ё хоҳари модари шумо?",
-      options: ["Cousin", "Aunt", "Son", "Daughter"],
-      correct: 1
-    }
-  ];
-
-  let currentQuestion = 0;
-  let score = 0;
-
-  const quizContainer = document.getElementById('quiz-container');
-  const nextBtn = document.getElementById('next-btn');
-
-  function loadQuestion() {
-    const q = quizData[currentQuestion];
-    let html = <div class="question">${q.question}</div><ul class="options">;
-    q.options.forEach((option, index) => {
-      html += <li>
-        <label>
-          <input type="radio" name="option" value="${index}" />
-          ${option}
-        </label>
-      </li>;
-    });
-    html += </ul>;
-    quizContainer.innerHTML = html;
-    // Reset button text
-    nextBtn.textContent = currentQuestion === quizData.length - 1 ? 'Нишон додан' : 'Пас';
+ const quizData = [
+  {
+    question: "Тарҷумаи \"бобо\" дар забони англисӣ чист?",
+    options: ["Father", "Mother", "Grandfather", "Sister"],
+    correct: 2
+  },
+  {
+    question: "Фарзанди падари шумо?",
+    options: ["Mother", "Grandmother", "Brother", "Uncle"],
+    correct: 2
+  },
+  {
+    question: "Апа ё хоҳари модари шумо?",
+    options: ["Cousin", "Aunt", "Son", "Daughter"],
+    correct: 1
   }
+];
+
+let currentQuestion = 0;
+let score = 0;
+
+const quizContainer = document.getElementById('quiz-container');
+const nextBtn = document.getElementById('next-btn');
+
+function loadQuestion() {
+  const q = quizData[currentQuestion];
+  let html = <div class="question">${q.question}</div><ul class="options">;
+  q.options.forEach((option, index) => {
+    html += <li>
+      <label>
+        <input type="radio" name="option" value="${index}" />
+        ${option}
+      </label>
+    </li>;
+  });
+  html += </ul>;
+  quizContainer.innerHTML = html;
+
+  nextBtn.textContent = currentQuestion === quizData.length - 1 ? 'Показ додан' : 'Пас';
+}
 
 function getSelected() {
-    const options = document.getElementsByName('option');
-    for (const option of options) {
-      if (option.checked) {
-        return Number(option.value);
-      }
+  const options = document.getElementsByName('option');
+  for (const option of options) {
+    if (option.checked) {
+      return Number(option.value);
     }
-    return null;
+  }
+  return null;
+}
+
+nextBtn.addEventListener('click', () => {
+  const selected = getSelected();
+  if (selected === null) {
+    alert("Лутфан, як вариантро интихоб кунед!");
+    return;
   }
 
-  nextBtn.addEventListener('click', () => {
-    const selected = getSelected();
-    if (selected === null) {
-      alert("Лутфан, як вариантро интихоб кунед!");
-      return;
-    }
-
-    if (selected === quizData[currentQuestion].correct) {
-      score++;
-    }
-
-    currentQuestion++;
-
-    if (currentQuestion < quizData.length) {
-      loadQuestion();
-    } else {
-      showResult();
-    }
-  });
-
-  function showResult() {
-    quizContainer.innerHTML = 
-      <div class="result-message">Шумо ${score} аз ${quizData.length} саволҳоро дуруст додед!</div>
-    ;
-    nextBtn.style.display = 'none';
+  if (selected === quizData[currentQuestion].correct) {
+    score++;
   }
 
-  // Load the first question at start
-  loadQuestion();
+  currentQuestion++;
+
+  if (currentQuestion < quizData.length) {
+    loadQuestion();
+  } else {
+    showResult();
+  }
+});
+
+function showResult() {
+  quizContainer.innerHTML = <div class="result-message">Шумо ${score} аз ${quizData.length} саволҳоро дуруст додед!</div>;
+  nextBtn.style.display = 'none';
+}
+
+  // question: "Тарҷумаи \"бобо\" дар забони англисӣ чист?",
+    options: ["Father", "Mother", "Grandfather", "Sister"],
+    correct: 2();
 </script>
 </body>
-
 </html>
