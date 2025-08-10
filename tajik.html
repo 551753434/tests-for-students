@@ -3,142 +3,70 @@
 <head>
   <meta charset="UTF-8" />
   <title>Тест - Тоҷикӣ</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #2575fc;
-      color: white;
-      padding: 30px;
-      text-align: center;
-    }
-    .container {
-      background: rgba(0,0,0,0.25);
-      border-radius: 20px;
-      padding: 30px;
-      max-width: 400px;
-      margin: auto;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    }
-    .question {
-      font-size: 22px;
-      font-weight: bold;
-      margin-bottom: 20px;
-    }
-    label {
-      display: block;
-      margin: 12px 0;
-      cursor: pointer;
-      font-size: 18px;
-      text-align: left;
-    }
-    input[type="radio"] {
-      margin-right: 12px;
-      transform: scale(1.2);
-      cursor: pointer;
-    }
-    button {
-      margin-top: 20px;
-      padding: 12px 30px;
-      font-size: 18px;
-      border: none;
-      border-radius: 30px;
-      background: white;
-      color: #2575fc;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    button:hover {
-      background: #1a4db7;
-      color: white;
-    }
-    .result {
-      font-size: 22px;
-      font-weight: bold;
-      margin-top: 30px;
-    }
-    a {
-      color: white;
-      text-decoration: underline;
-      display: inline-block;
-      margin-top: 30px;
-      font-weight: bold;
-    }
-  </style>
 </head>
 <body>
+  <h1>Тест барои донишҷӯён</h1>
 
-  <div class="container">
-    <div id="quiz-container"></div>
-    <button id="next-btn">Пас</button>
-    <br />
-    <a href="index.html">Баргашт ба Саҳифаи Асосӣ</a>
-  </div>
+  <form id="quiz-form">
+    <div>
+      <p>1. Тарҷумаи "бобо" дар забони англисӣ чист?</p>
+      <input type="radio" id="q1a1" name="q1" value="0" />
+      <label for="q1a1">Father</label><br />
+      <input type="radio" id="q1a2" name="q1" value="1" />
+      <label for="q1a2">Mother</label><br />
+      <input type="radio" id="q1a3" name="q1" value="2" />
+      <label for="q1a3">Grandfather</label><br />
+      <input type="radio" id="q1a4" name="q1" value="3" />
+      <label for="q1a4">Sister</label><br />
+    </div>
 
-<script>
-  const quizData = [
-    {
-      question: 'Тарҷумаи "бобо" дар забони англисӣ чист?',
-      options: ['Father', 'Mother', 'Grandfather', 'Sister'],
-      correct: 2
-    },
-    {
-      question: 'Фарзанди падари шумо?',
-      options: ['Mother', 'Grandmother', 'Brother', 'Uncle'],
-      correct: 2
-    }
-  ];
+    <div>
+      <p>2. Фарзанди падари шумо?</p>
+      <input type="radio" id="q2a1" name="q2" value="0" />
+      <label for="q2a1">Mother</label><br />
+      <input type="radio" id="q2a2" name="q2" value="1" />
+      <label for="q2a2">Grandmother</label><br />
+      <input type="radio" id="q2a3" name="q2" value="2" />
+      <label for="q2a3">Brother</label><br />
+      <input type="radio" id="q2a4" name="q2" value="3" />
+      <label for="q2a4">Uncle</label><br />
+    </div>
 
-  let currentQuestion = 0;
-  let score = 0;
+    <button type="button" onclick="checkAnswers()">Ҳисоб кунед</button>
+  </form>
 
-  const quizContainer = document.getElementById('quiz-container');
-  const nextBtn = document.getElementById('next-btn');
+  <div id="result" style="margin-top:20px; font-weight:bold;"></div>
 
-  function loadQuestion() {
-    const q = quizData[currentQuestion];
-    let html = <div class="question">${q.question}</div>;
-    q.options.forEach((opt, i) => {
-      html += <label><input type="radio" name="option" value="${i}"/>${opt}</label>;
-    });
-    quizContainer.innerHTML = html;
+  <script>
+    function checkAnswers() {
+      const correctAnswers = {
+        q1: 2, // Grandfather
+        q2: 2  // Brother
+      };
 
-    nextBtn.textContent = currentQuestion === quizData.length - 1 ? 'Показ додан' : 'Пас';
-  }
+      let score = 0;
+      let total = Object.keys(correctAnswers).length;
 
-  function getSelected() {
-    const options = document.getElementsByName('option');
-    for (const opt of options) {
-      if (opt.checked) {
-        return Number(opt.value);
+      for (const q in correctAnswers) {
+        const options = document.getElementsByName(q);
+        let answered = false;
+        for (const option of options) {
+          if (option.checked) {
+            answered = true;
+            if (parseInt(option.value) === correctAnswers[q]) {
+              score++;
+            }
+            break;
+          }
+        }
+        if (!answered) {
+          alert('Лутфан, саволҳоро пурра ҷавоб диҳед!');
+          return;
+        }
       }
+
+      document.getElementById('result').innerText = Шумо ${score} аз ${total} саволҳоро дуруст додед!;
     }
-    return null;
-  }
-
-  nextBtn.onclick = () => {
-    const selected = getSelected();
-    if (selected === null) {
-      alert('Лутфан, як вариантро интихоб кунед!');
-      return;
-    }
-
-    if (selected === quizData[currentQuestion].correct) {
-      score++;
-    }
-
-    currentQuestion++;
-
-    if (currentQuestion < quizData.length) {
-      loadQuestion();
-    } else {
-      quizContainer.innerHTML = <div class="result">Шумо ${score} аз ${quizData.length} саволҳоро дуруст додед!</div>;
-      nextBtn.style.display = 'none';
-    }
-  };
-
-  loadQuestion();
-</script>
-
+  </script>
 </body>
 </html>
