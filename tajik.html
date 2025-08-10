@@ -1,3 +1,4 @@
+꧁࿇♥ᴬ҉ᴮ҉ᴰ҉ᵁ҉ᴸ҉ᴴ҉ᴬ҉ᵞ҉❤️༒꧂, [10.08.2025 8:07]
 <!DOCTYPE html>
 <html lang="tg">
 <head>
@@ -13,12 +14,14 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      align-items: center;
     }
     header {
       padding: 20px;
       text-align: center;
       background: rgba(0, 0, 0, 0.3);
       box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      width: 100%;
     }
     header h1 {
       margin: 0;
@@ -36,23 +39,65 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      gap: 30px;
+      gap: 20px;
       padding: 40px 20px;
       text-align: center;
+      width: 320px;
+      background: rgba(0,0,0,0.25);
+      border-radius: 20px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+    .question {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+    .options {
+      list-style: none;
+      padding: 0;
+      width: 100%;
+      text-align: left;
+    }
+    .options li {
+      margin-bottom: 12px;
+    }
+    label {
+      cursor: pointer;
+      font-size: 18px;
+    }
+    input[type="radio"] {
+      margin-right: 12px;
+      transform: scale(1.2);
+      cursor: pointer;
+    }
+    button.next-btn {
+      margin-top: 20px;
+      padding: 12px 30px;
+      font-size: 18px;
+      font-weight: 600;
+      border-radius: 40px;
+      border: none;
+      cursor: pointer;
+      background: #2575fc;
+      color: white;
+      box-shadow: 0 5px 15px rgba(37,117,252,0.6);
+      transition: background 0.3s ease;
+    }
+    button.next-btn:hover {
+      background: #1a4db7;
     }
     a.back-btn {
       color: white;
       text-decoration: underline;
       font-weight: 600;
       cursor: pointer;
+      margin-top: 20px;
+      display: inline-block;
     }
-    footer {
-      text-align: center;
-      padding: 15px;
-      background: rgba(0, 0, 0, 0.2);
-      font-size: 14px;
-      opacity: 0.8;
-      color: white;
+    .result-message {
+      font-size: 20px;
+      font-weight: 700;
+      margin-top: 25px;
     }
   </style>
 </head>
@@ -62,12 +107,97 @@
     <p>Муаллиф: Самандар Тошпулатов | Почта: samandartoshpulatov511@gmail.com</p>
   </header>
   <main>
-    <h2>Саҳифаи озмоишӣ - Тоҷикӣ</h2>
-    <p>Барои шуруъ кардан ба тестҳо дар оянда омода шавед.</p>
+    <div id="quiz-container">
+      <!-- Quiz content will be injected here -->
+    </div>
+    <button class="next-btn" id="next-btn">Пас</button>
     <a href="index.html" class="back-btn">Баргашт ба Саҳифаи Асосӣ</a>
   </main>
   <footer>
     &copy; 2025 Самандар Тошпулатов. Ҳама ҳуқуқҳо ҳифз шудаанд.
   </footer>
+
+<script>
+  const quizData = [
+    {
+      question: "Тарҷумаи "бобо" дар забони англисӣ чист?",
+      options: ["Father", "Mother", "Grandfather", "Sister"],
+      correct: 2
+    },
+    {
+      question: "Фарзанди падари шумо?",
+      options: ["Mother", "Grandmother", "Brother", "Uncle"],
+      correct: 2
+    },
+    {
+      question: "Апа ё хоҳари модари шумо?",
+      options: ["Cousin", "Aunt", "Son", "Daughter"],
+      correct: 1
+    }
+  ];
+
+  let currentQuestion = 0;
+  let score = 0;
+
+  const quizContainer = document.getElementById('quiz-container');
+  const nextBtn = document.getElementById('next-btn');
+
+  function loadQuestion() {
+    const q = quizData[currentQuestion];
+    let html = <div class="question">${q.question}</div><ul class="options">;
+    q.options.forEach((option, index) => {
+      html += <li>
+        <label>
+          <input type="radio" name="option" value="${index}" />
+          ${option}
+        </label>
+      </li>;
+    });
+    html += </ul>;
+    quizContainer.innerHTML = html;
+    // Reset button text
+    nextBtn.textContent = currentQuestion === quizData.length - 1 ? 'Показ додан' : 'Пас';
+  }
+
+function getSelected() {
+    const options = document.getElementsByName('option');
+    for (const option of options) {
+      if (option.checked) {
+        return Number(option.value);
+      }
+    }
+    return null;
+  }
+
+  nextBtn.addEventListener('click', () => {
+    const selected = getSelected();
+    if (selected === null) {
+      alert("Лутфан, як вариантро интихоб кунед!");
+      return;
+    }
+
+    if (selected === quizData[currentQuestion].correct) {
+      score++;
+    }
+
+    currentQuestion++;
+
+    if (currentQuestion < quizData.length) {
+      loadQuestion();
+    } else {
+      showResult();
+    }
+  });
+
+  function showResult() {
+    quizContainer.innerHTML = 
+      <div class="result-message">Шумо ${score} аз ${quizData.length} саволҳоро дуруст додед!</div>
+    ;
+    nextBtn.style.display = 'none';
+  }
+
+  // Load the first question at start
+  loadQuestion();
+</script>
 </body>
 </html>
