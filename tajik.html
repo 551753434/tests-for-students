@@ -1,4 +1,4 @@
-
+꧁࿇♥ᴬ҉ᴮ҉ᴰ҉ᵁ҉ᴸ҉ᴴ҉ᴬ҉ᵞ҉❤️༒꧂, [10.08.2025 8:52]
 <!DOCTYPE html>
 <html lang="tg">
 <head>
@@ -117,86 +117,85 @@
     &copy; 2025 Самандар Тошпулатов. Ҳама ҳуқуқҳо ҳифз шудаанд.
   </footer>
 
-<script>
- const quizData = [
-  {
-    question: "Тарҷумаи \"бобо\" дар забони англисӣ чист?",
-    options: ["Father", "Mother", "Grandfather", "Sister"],
-    correct: 2
-  },
-  {
-    question: "Фарзанди падари шумо?",
-    options: ["Mother", "Grandmother", "Brother", "Uncle"],
-    correct: 2
-  },
-  {
-    question: "Апа ё хоҳари модари шумо?",
-    options: ["Cousin", "Aunt", "Son", "Daughter"],
-    correct: 1
-  }
-];
+  <script>
+    const quizData = [
+      {
+        question: "Тарҷумаи \"бобо\" дар забони англисӣ чист?",
+        options: ["Father", "Mother", "Grandfather", "Sister"],
+        correct: 2
+      },
+      {
+        question: "Фарзанди падари шумо?",
+        options: ["Mother", "Grandmother", "Brother", "Uncle"],
+        correct: 2
+      },
+      {
+        question: "Апа ё хоҳари модари шумо?",
+        options: ["Cousin", "Aunt", "Son", "Daughter"],
+        correct: 1
+      }
+    ];
 
-let currentQuestion = 0;
-let score = 0;
+    let currentQuestion = 0;
+    let score = 0;
 
-const quizContainer = document.getElementById('quiz-container');
-const nextBtn = document.getElementById('next-btn');
+    const quizContainer = document.getElementById('quiz-container');
+    const nextBtn = document.getElementById('next-btn');
 
-function loadQuestion() {
-  const q = quizData[currentQuestion];
-  let html = <div class="question">${q.question}</div><ul class="options">;
-  q.options.forEach((option, index) => {
-    html += <li>
-      <label>
-        <input type="radio" name="option" value="${index}" />
-        ${option}
-      </label>
-    </li>;
-  });
-  html += </ul>;
-  quizContainer.innerHTML = html;
+    function loadQuestion() {
+      const q = quizData[currentQuestion];
+      let html = <div class="question">${q.question}</div><ul class="options">;
+      q.options.forEach((option, index) => {
+        html += <li>
+          <label>
+            <input type="radio" name="option" value="${index}" />
+            ${option}
+          </label>
+        </li>;
+      });
+      html += </ul>;
+      quizContainer.innerHTML = html;
 
-  nextBtn.textContent = currentQuestion === quizData.length - 1 ? 'Показ додан' : 'Пас';
-}
+      nextBtn.textContent = currentQuestion === quizData.length - 1 ? 'Нишон додан' : 'Пас';
+    }
 
 function getSelected() {
-  const options = document.getElementsByName('option');
-  for (const option of options) {
-    if (option.checked) {
-      return Number(option.value);
+      const options = document.getElementsByName('option');
+      for (const option of options) {
+        if (option.checked) {
+          return Number(option.value);
+        }
+      }
+      return null;
     }
-  }
-  return null;
-}
 
-nextBtn.addEventListener('click', () => {
-  const selected = getSelected();
-  if (selected === null) {
-    alert("Лутфан, як вариантро интихоб кунед!");
-    return;
-  }
+    nextBtn.addEventListener('click', () => {
+      const selected = getSelected();
+      if (selected === null) {
+        alert("Лутфан, як вариантро интихоб кунед!");
+        return;
+      }
 
-  if (selected === quizData[currentQuestion].correct) {
-    score++;
-  }
+      if (selected === quizData[currentQuestion].correct) {
+        score++;
+      }
 
-  currentQuestion++;
+      currentQuestion++;
 
-  if (currentQuestion < quizData.length) {
+      if (currentQuestion < quizData.length) {
+        loadQuestion();
+      } else {
+        showResult();
+      }
+    });
+
+    function showResult() {
+      quizContainer.innerHTML = <div class="result-message">Шумо ${score} аз ${quizData.length} саволҳоро дуруст додед!</div>;
+      nextBtn.style.display = 'none';
+    }
+
+    // Load the first question when page loads
     loadQuestion();
-  } else {
-    showResult();
-  }
-});
-
-function showResult() {
-  quizContainer.innerHTML = <div class="result-message">Шумо ${score} аз ${quizData.length} саволҳоро дуруст додед!</div>;
-  nextBtn.style.display = 'none';
-}
-
-  // question: "Тарҷумаи \"бобо\" дар забони англисӣ чист?",
-    options: ["Father", "Mother", "Grandfather", "Sister"],
-    correct: 2();
-</script>
+  </script>
 </body>
 </html>
