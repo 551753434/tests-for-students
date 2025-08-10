@@ -3,70 +3,162 @@
 <head>
   <meta charset="UTF-8" />
   <title>Тест - Тоҷикӣ</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+      color: white;
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+    .container {
+      background: rgba(0,0,0,0.25);
+      border-radius: 20px;
+      padding: 30px;
+      max-width: 400px;
+      width: 100%;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      text-align: center;
+    }
+    .question {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    .options {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 20px 0;
+      text-align: left;
+    }
+    .options li {
+      margin-bottom: 15px;
+    }
+    label {
+      cursor: pointer;
+      font-size: 18px;
+    }
+    input[type="radio"] {
+      margin-right: 10px;
+      transform: scale(1.2);
+      cursor: pointer;
+    }
+    button {
+      background: #2575fc;
+      border: none;
+      padding: 12px 30px;
+      font-size: 18px;
+      color: white;
+      border-radius: 40px;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(37,117,252,0.6);
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background: #1a4db7;
+    }
+    .result-message {
+      font-size: 20px;
+      font-weight: 700;
+    }
+    a.back-btn {
+      display: block;
+      margin-top: 25px;
+      color: white;
+      text-decoration: underline;
+      font-weight: 600;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-  <h1>Тест барои донишҷӯён</h1>
-
-  <form id="quiz-form">
-    <div>
-      <p>1. Тарҷумаи "бобо" дар забони англисӣ чист?</p>
-      <input type="radio" id="q1a1" name="q1" value="0" />
-      <label for="q1a1">Father</label><br />
-      <input type="radio" id="q1a2" name="q1" value="1" />
-      <label for="q1a2">Mother</label><br />
-      <input type="radio" id="q1a3" name="q1" value="2" />
-      <label for="q1a3">Grandfather</label><br />
-      <input type="radio" id="q1a4" name="q1" value="3" />
-      <label for="q1a4">Sister</label><br />
-    </div>
-
-    <div>
-      <p>2. Фарзанди падари шумо?</p>
-      <input type="radio" id="q2a1" name="q2" value="0" />
-      <label for="q2a1">Mother</label><br />
-      <input type="radio" id="q2a2" name="q2" value="1" />
-      <label for="q2a2">Grandmother</label><br />
-      <input type="radio" id="q2a3" name="q2" value="2" />
-      <label for="q2a3">Brother</label><br />
-      <input type="radio" id="q2a4" name="q2" value="3" />
-      <label for="q2a4">Uncle</label><br />
-    </div>
-
-    <button type="button" onclick="checkAnswers()">Ҳисоб кунед</button>
-  </form>
-
-  <div id="result" style="margin-top:20px; font-weight:bold;"></div>
+  <div class="container">
+    <div id="quiz-container"></div>
+    <button id="next-btn">Пас</button>
+    <a href="index.html" class="back-btn">Баргашт ба Саҳифаи Асосӣ</a>
+  </div>
 
   <script>
-    function checkAnswers() {
-      const correctAnswers = {
-        q1: 2, // Grandfather
-        q2: 2  // Brother
-      };
+    const quizData = [
+      {
+        question: 'Тарҷумаи "бобо" дар забони англисӣ чист?',
+        options: ['Father', 'Mother', 'Grandfather', 'Sister'],
+        correct: 2
+      },
+      {
+        question: 'Фарзанди падари шумо?',
+        options: ['Mother', 'Grandmother', 'Brother', 'Uncle'],
+        correct: 2
+      },
+      {
+        question: 'Апа ё хоҳари модари шумо?',
+        options: ['Cousin', 'Aunt', 'Son', 'Daughter'],
+        correct: 1
+      }
+    ];
 
-      let score = 0;
-      let total = Object.keys(correctAnswers).length;
+    let currentQuestion = 0;
+    let score = 0;
 
-      for (const q in correctAnswers) {
-        const options = document.getElementsByName(q);
-        let answered = false;
-        for (const option of options) {
-          if (option.checked) {
-            answered = true;
-            if (parseInt(option.value) === correctAnswers[q]) {
-              score++;
-            }
-            break;
-          }
-        }
-        if (!answered) {
-          alert('Лутфан, саволҳоро пурра ҷавоб диҳед!');
-          return;
+    const quizContainer = document.getElementById('quiz-container');
+    const nextBtn = document.getElementById('next-btn');
+
+    function loadQuestion() {
+      const q = quizData[currentQuestion];
+      let html = <div class="question">${q.question}</div><ul class="options">;
+      q.options.forEach((option, index) => {
+        html += 
+          <li>
+            <label>
+              <input type="radio" name="option" value="${index}" />
+              ${option}
+            </label>
+          </li>;
+      });
+      html += '</ul>';
+      quizContainer.innerHTML = html;
+
+      nextBtn.textContent = currentQuestion === quizData.length - 1 ? 'Показ додан' : 'Пас';
+    }
+
+    function getSelected() {
+      const options = document.getElementsByName('option');
+      for (const option of options) {
+        if (option.checked) {
+          return Number(option.value);
         }
       }
-
-      document.getElementById('result').innerText = Шумо ${score} аз ${total} саволҳоро дуруст додед!;
+      return null;
     }
+
+    nextBtn.addEventListener('click', () => {
+      const selected = getSelected();
+      if (selected === null) {
+        alert('Лутфан, як вариантро интихоб кунед!');
+        return;
+      }
+      if (selected === quizData[currentQuestion].correct) {
+        score++;
+      }
+      currentQuestion++;
+      if (currentQuestion < quizData.length) {
+        loadQuestion();
+      } else {
+        showResult();
+      }
+    });
+
+    function showResult() {
+      quizContainer.innerHTML = <div class="result-message">Шумо ${score} аз ${quizData.length} саволҳоро дуруст додед!</div>;
+      nextBtn.style.display = 'none';
+    }
+
+    loadQuestion();
   </script>
 </body>
 </html>
