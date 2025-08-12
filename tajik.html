@@ -1,72 +1,136 @@
 <!DOCTYPE html>
 <html lang="tg">
 <head>
-  <meta charset="UTF-8" />
-  <title>Тест - Тоҷикӣ</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tajik Test</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+    }
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+    .quiz-container {
+        max-width: 700px;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        margin: auto;
+        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+    .question {
+        margin-bottom: 15px;
+        font-weight: bold;
+    }
+    .answers label {
+        display: block;
+        margin: 8px 0;
+        background: #eee;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .answers input {
+        margin-right: 10px;
+    }
+    button {
+        padding: 10px 20px;
+        background: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 20px;
+    }
+    button:hover {
+        background: #45a049;
+    }
+    .result {
+        margin-top: 20px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+    .back-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        margin-bottom: 20px;
+        background: #2196F3;
+        color: white;
+        border-radius: 5px;
+        text-decoration: none;
+    }
+    .back-btn:hover {
+        background: #1976D2;
+    }
+</style>
 </head>
 <body>
-  <h1>Тест барои донишҷӯён</h1>
 
-  <form id="quiz-form">
-    <div>
-      <p>1. Тарҷумаи "бобо" дар забони англисӣ чист?</p>
-      <input type="radio" id="q1a1" name="q1" value="0" />
-      <label for="q1a1">Father</label><br />
-      <input type="radio" id="q1a2" name="q1" value="1" />
-      <label for="q1a2">Mother</label><br />
-      <input type="radio" id="q1a3" name="q1" value="2" />
-      <label for="q1a3">Grandfather</label><br />
-      <input type="radio" id="q1a4" name="q1" value="3" />
-      <label for="q1a4">Sister</label><br />
+<a href="index.html" class="back-btn">← Back to Homepage</a>
+
+<h1>Tajik Test</h1>
+
+<div class="quiz-container">
+    <!-- Test: Introduction -->
+    <div class="question">1. "Рӯз ба хайр" дар забони англисӣ чӣ мешавад?</div>
+    <div class="answers">
+        <label><input type="radio" name="q1" value="0"> Good morning</label>
+        <label><input type="radio" name="q1" value="1"> Good afternoon</label>
+        <label><input type="radio" name="q1" value="0"> Good evening</label>
     </div>
 
-    <div>
-      <p>2. Фарзанди падари шумо?</p>
-      <input type="radio" id="q2a1" name="q2" value="0" />
-      <label for="q2a1">Mother</label><br />
-      <input type="radio" id="q2a2" name="q2" value="1" />
-      <label for="q2a2">Grandmother</label><br />
-      <input type="radio" id="q2a3" name="q2" value="2" />
-      <label for="q2a3">Brother</label><br />
-      <input type="radio" id="q2a4" name="q2" value="3" />
-      <label for="q2a4">Uncle</label><br />
+    <div class="question">2. Answer to "How are you?"</div>
+    <div class="answers">
+        <label><input type="radio" name="q2" value="1"> I am fine</label>
+        <label><input type="radio" name="q2" value="0"> My name is Ali</label>
+        <label><input type="radio" name="q2" value="0"> I am a pupil</label>
     </div>
 
-    <button type="button" onclick="checkAnswers()">Ҳисоб кунед</button>
-  </form>
+    <div class="question">3. What is the translation of "hello" in Tajik</div>
+    <div class="answers">
+       <label><input type="radio" name="q3" value="0"> Чӣ хел ҳастӣ</label>
+       <label><input type="radio" name="q3" value="1"> Салом</label>
+       <label><input type="radio" name="q2" value="0"> Ту ки ҳастӣ </label>
+     </div>
 
-  <div id="result" style="margin-top:20px; font-weight:bold;"></div>
+    <div class="question">4. Шумо кай ибораи "Good night"-ро истифода мебаред?</div>
+   <div class="answers">     
+    <label><input type="radio" name="q4" value="1">Пеш аз хоб рафтан</label>
+    <label><input type="radio" name="q4" value="0">Пеш аз хӯрдан</label>
+    <label><input type="radio" name="q4" value="0">Дар вақти салом кардан</label>
+   </div>
 
-  <script>
-    function checkAnswers() {
-      const correctAnswers = {
-        q1: 2, // Grandfather
-        q2: 2  // Brother
-      };
+    <div class="question">5. Тарҷумаи "Good bye" чист?</div>
+  <div class="answers">
+  <label><input type="radio" name="q5" value="0">Салом</label>
+  <label><input type="radio" name="q5" value="1">Хайр</label>
+  <label><input type="radio" name="q5" value="0">Рӯз ба хайр</label>
+</div>
 
-      let score = 0;
-      let total = Object.keys(correctAnswers).length;
+    <button onclick="checkAnswers()">Check Score</button>
 
-      for (const q in correctAnswers) {
-        const options = document.getElementsByName(q);
-        let answered = false;
-        for (const option of options) {
-          if (option.checked) {
-            answered = true;
-            if (parseInt(option.value) === correctAnswers[q]) {
-              score++;
-            }
-            break;
-          }
-        }
-        if (!answered) {
-          alert('Лутфан, саволҳоро пурра ҷавоб диҳед!');
-          return;
-        }
-      }
+    <div class="result" id="result"></div>
+</div>
 
-      document.getElementById('result').innerText = Шумо ${score} аз ${total} саволҳоро дуруст додед!;
-    }
-  </script>
+<script>
+function checkAnswers() {
+    let score = 0;
+    let total = document.querySelectorAll('.question').length;
+    const answers = document.querySelectorAll('input[type=radio]:checked');
+
+    answers.forEach(answer => {
+        score += parseInt(answer.value);
+    });
+
+    document.getElementById('result').innerHTML = 
+        You scored ${score} out of ${total};
+}
+</script>
+
 </body>
 </html>
