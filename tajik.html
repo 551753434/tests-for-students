@@ -1,136 +1,70 @@
 <!DOCTYPE html>
-<html lang="tg">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tajik Test</title>
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background: #f4f4f4;
-        margin: 0;
-        padding: 20px;
-    }
-    h1 {
-        text-align: center;
-        color: #333;
-    }
-    .quiz-container {
-        max-width: 700px;
-        background: white;
-        padding: 20px;
-        border-radius: 10px;
-        margin: auto;
-        box-shadow: 0 0 15px rgba(0,0,0,0.1);
-    }
-    .question {
-        margin-bottom: 15px;
-        font-weight: bold;
-    }
-    .answers label {
-        display: block;
-        margin: 8px 0;
-        background: #eee;
-        padding: 10px;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-    .answers input {
-        margin-right: 10px;
-    }
-    button {
-        padding: 10px 20px;
-        background: #4CAF50;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        margin-top: 20px;
-    }
-    button:hover {
-        background: #45a049;
-    }
-    .result {
-        margin-top: 20px;
-        font-size: 18px;
-        font-weight: bold;
-    }
-    .back-btn {
-        display: inline-block;
-        padding: 10px 20px;
-        margin-bottom: 20px;
-        background: #2196F3;
-        color: white;
-        border-radius: 5px;
-        text-decoration: none;
-    }
-    .back-btn:hover {
-        background: #1976D2;
-    }
-</style>
+    <meta charset="UTF-8">
+    <title>Tajik Test</title>
 </head>
 <body>
+    <h1>English Test</h1>
 
-<a href="index.html" class="back-btn">← Back to Homepage</a>
+    <form id="quizForm">
+        <p>1. How are you?</p>
+        <input type="radio" name="q1" value="I am fine"> I am fine<br>
+        <input type="radio" name="q1" value="I am Ali"> I am Ali<br>
+        <input type="radio" name="q1" value="I am a pupil"> I am a pupil<br>
 
-<h1>Tajik Test</h1>
+        <p>2. Тарҷумаи "hello" дар забони тоҷикӣ чист?</p>
+        <input type="radio" name="q2" value="Хайр"> Хайр<br>
+        <input type="radio" name="q2" value="Салом"> Салом<br>
+        <input type="radio" name="q2" value="Хоби хуш"> Хоби хуш<br>
 
-<div class="quiz-container">
-    <!-- Test: Introduction -->
-    <div class="question">1. "Рӯз ба хайр" дар забони англисӣ чӣ мешавад?</div>
-    <div class="answers">
-        <label><input type="radio" name="q1" value="0"> Good morning</label>
-        <label><input type="radio" name="q1" value="1"> Good afternoon</label>
-        <label><input type="radio" name="q1" value="0"> Good evening</label>
-    </div>
+        <p>3. Тарҷумаи "Good morning"-ро дар забони тоҷикӣ ёбед:</p>
+        <input type="radio" name="q3" value="Рӯз ба хайр"> Рӯз ба хайр<br>
+        <input type="radio" name="q3" value="Субҳ ба хайр"> Субҳ ба хайр<br>
+        <input type="radio" name="q3" value="Шом ба хайр"> Шом ба хайр<br>
 
-    <div class="question">2. Answer to "How are you?"</div>
-    <div class="answers">
-        <label><input type="radio" name="q2" value="1"> I am fine</label>
-        <label><input type="radio" name="q2" value="0"> My name is Ali</label>
-        <label><input type="radio" name="q2" value="0"> I am a pupil</label>
-    </div>
+        <p>4. "Хоби хуш" дар забони англисӣ чӣ гуна гуфта мешавад?</p>
+        <input type="radio" name="q4" value="Good day"> Good day<br>
+        <input type="radio" name="q4" value="Good evening"> Good evening<br>
+        <input type="radio" name="q4" value="Good night"> Good night<br>
 
-    <div class="question">3. What is the translation of "hello" in Tajik</div>
-    <div class="answers">
-       <label><input type="radio" name="q3" value="0"> Чӣ хел ҳастӣ</label>
-       <label><input type="radio" name="q3" value="1"> Салом</label>
-       <label><input type="radio" name="q2" value="0"> Ту ки ҳастӣ </label>
-     </div>
+        <p>5. Ибораи "Good evening"-ро кай истифода мебарем?</p>
+        <input type="radio" name="q5" value="Дар вақти шом"> Дар вақти шом<br>
+        <input type="radio" name="q5" value="Дар нисфирӯзӣ"> Дар нисфирӯзӣ<br>
+        <input type="radio" name="q5" value="Дар саҳар"> Дар саҳар<br>
 
-    <div class="question">4. Шумо кай ибораи "Good night"-ро истифода мебаред?</div>
-   <div class="answers">     
-    <label><input type="radio" name="q4" value="1">Пеш аз хоб рафтан</label>
-    <label><input type="radio" name="q4" value="0">Пеш аз хӯрдан</label>
-    <label><input type="radio" name="q4" value="0">Дар вақти салом кардан</label>
-   </div>
 
-    <div class="question">5. Тарҷумаи "Good bye" чист?</div>
-  <div class="answers">
-  <label><input type="radio" name="q5" value="0">Салом</label>
-  <label><input type="radio" name="q5" value="1">Хайр</label>
-  <label><input type="radio" name="q5" value="0">Рӯз ба хайр</label>
-</div>
 
-    <button onclick="checkAnswers()">Check Score</button>
 
-    <div class="result" id="result"></div>
-</div>
+        <br>
+        <button type="button" onclick="checkAnswers()">Check Score</button>
+    </form>
 
-<script>
-function checkAnswers() {
-    let score = 0;
-    let total = document.querySelectorAll('.question').length;
-    const answers = document.querySelectorAll('input[type=radio]:checked');
+    <p id="result"></p>
 
-    answers.forEach(answer => {
-        score += parseInt(answer.value);
-    });
+    <script>
+        function checkAnswers() {
+            let score = 0;
+            let total = 5; 
 
-    document.getElementById('result').innerHTML = 
-        You scored ${score} out of ${total};
-}
-</script>
+            let answers = {
+                q1: "I am fine",
+                q2: "Салом"
+                q3: "Субҳ ба хайр"
+                q4: "Good night"
+                q5: "Дар вақти шом"
+            };
 
+            for (let key in answers) {
+                let selected = document.querySelector(input[name="${key}"]:checked);
+                if (selected && selected.value === answers[key]) {
+                    score++;
+                }
+            }
+
+            document.getElementById("result").innerHTML = 
+                "Your score: " + score + " / " + total;
+        }
+    </script>
 </body>
 </html>
