@@ -6,7 +6,6 @@
 </head>
 <body>
     <h1>English Test</h1>
-
     <form id="quizForm">
         <p>1. How are you?</p>
         <input type="radio" name="q1" value="I am fine"> I am fine<br>
@@ -33,9 +32,6 @@
         <input type="radio" name="q5" value="Дар нисфирӯзӣ"> Дар нисфирӯзӣ<br>
         <input type="radio" name="q5" value="Дар саҳар"> Дар саҳар<br>
 
-
-
-
         <br>
         <button type="button" onclick="checkAnswers()">Check Score</button>
     </form>
@@ -45,13 +41,13 @@
     <script>
         function checkAnswers() {
             let score = 0;
-            let total = 5; 
+            let total = 5;
 
             let answers = {
                 q1: "I am fine",
-                q2: "Салом"
-                q3: "Субҳ ба хайр"
-                q4: "Good night"
+                q2: "Салом",
+                q3: "Субҳ ба хайр",
+                q4: "Good night",
                 q5: "Дар вақти шом"
             };
 
@@ -62,7 +58,7 @@
                 }
             }
 
-            document.getElementById("result").innerHTML = 
+            document.getElementById("result").innerHTML =
                 "Your score: " + score + " / " + total;
         }
     </script>
