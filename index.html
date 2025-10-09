@@ -1,208 +1,124 @@
+
+
+html
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>English Level Test</title>
+  <title>Maverick English Academy</title>
   <style>
-    body { font-family: Arial, sans-serif; max-width: 800px; margin: 20px auto; padding: 10px; }
-    .question { margin-bottom: 20px; }
-    .hidden { display: none; }
-    #result { font-weight: bold; font-size: 20px; margin-top: 20px; }
-    #timer { font-size: 16px; color: #333; margin-bottom: 10px; }
-    #editor { margin-top: 30px; border-top: 2px solid #ccc; padding-top: 20px; }
-    .editor-question { border: 1px solid #ddd; padding: 10px; margin-bottom: 15px; border-radius: 8px; }
-    .remove-btn { color: red; cursor: pointer; margin-left: 10px; }
-    .admin-btn { margin-top: 20px; padding: 8px 12px; background: #444; color: #fff; border: none; border-radius: 6px; cursor: pointer; }
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #004aad, #007bff);
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+    }
+    header {
+      text-align: center;
+      padding: 50px 20px 20px;
+    }
+    header h1 {
+      font-size: 2.5em;
+      font-weight: 700;
+      margin: 0;
+    }
+    header p {
+      font-size: 1.2em;
+      opacity: 0.9;
+      margin-top: 8px;
+    }
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+    }
+    .test-buttons {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .test-btn {
+      background-color: white;
+      color: #004aad;
+      font-weight: 600;
+      padding: 15px 30px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-size: 1.1em;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    .test-btn:hover {
+      background-color: #004aad;
+      color: white;
+      transform: translateY(-5px);
+    }
+    .admin-btn {
+      background-color: #ffcc00;
+      color: #222;
+      border: none;
+      font-weight: 600;
+      padding: 14px 28px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s ease;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+    }
+    .admin-btn:hover {
+      background-color: #ffaa00;
+      transform: translateY(-3px);
+    }
+    footer {
+      padding: 15px;
+      text-align: center;
+      font-size: 0.9em;
+      background: rgba(255, 255, 255, 0.1);
+      width: 100%;
+      backdrop-filter: blur(5px);
+    }
   </style>
 </head>
 <body>
-  <h1>English Level Test</h1>
-  <div id="timer">Time: 00:00</div>
-  <div id="quiz"></div>
-  <button id="next" class="hidden">Next Level</button>
-  <div id="result"></div>
 
-  <button id="adminLogin" class="admin-btn">Admin Login</button>
-  <div id="editor" class="hidden"></div>
+  <header>
+    <h1>Maverick English Academy</h1>
+    <p>Professional English Grammar Tests – A1 & A2 Levels</p>
+  </header>
+
+  <main>
+    <div class="test-buttons">
+      <a href="a1.html" class="test-btn">A1 Level Test</a>
+      <a href="a2.html" class="test-btn">A2 Level Test</a>
+    </div>
+    <button class="admin-btn" onclick="openAdmin()">Admin Login</button>
+  </main>
+
+  <footer>
+    © 2025 Maverick English Academy | All Rights Reserved
+  </footer>
 
   <script>
-    const questionBank = {
-      A1: [
-        { q: "What color is the sky?", o: ["Blue", "Red", "Green", "Yellow"], a: 0 },
-        { q: "Choose the correct form: I ___ a student.", o: ["am", "is", "are", "be"], a: 0 },
-        { q: "How do you say hello?", o: ["Bye", "Hello", "Thanks", "Sorry"], a: 1 },
-      ],
-      A2: [
-        { q: "She ___ to school every day.", o: ["go", "goes", "going", "gone"], a: 1 },
-        { q: "Plural of child is:", o: ["Childs", "Children", "Childes", "Child"], a: 1 },
-      ],
-      B1: [], B2: [], C1: [], C2: []
-    };
-
-    const levels = ["A1", "A2", "B1", "B2", "C1", "C2"];
-    let currentLevelIndex = 0;
-    let totalCorrect = 0;
-    let totalQuestions = 0;
-    let startTime = Date.now();
-    let currentQuestions = [];
-    let timerInterval;
-
-    const praiseMessages = ["Awesome!", "That is great!", "You are incredible!", "Fantastic job!", "Excellent work!"];
-
-    function shuffle(arr) {
-      return arr.slice().sort(() => Math.random() - 0.5);
-    }
-
-    function updateTimer() {
-      const now = Date.now();
-      const elapsed = now - startTime;
-      const minutes = Math.floor(elapsed / 60000);
-      const seconds = Math.floor((elapsed % 60000) / 1000);
-      document.getElementById("timer").textContent = Time: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')};
-    }
-
-    function renderLevel(level) {
-      if (!timerInterval) timerInterval = setInterval(updateTimer, 1000);
-      document.getElementById('result').innerHTML = "";
-      const quizDiv = document.getElementById("quiz");
-      quizDiv.innerHTML = <h2>Level ${level}</h2>;
-      currentQuestions = shuffle(questionBank[level]).slice(0, 10);
-      currentQuestions.forEach((q, i) => {
-        quizDiv.innerHTML += <div class='question'><p>${i + 1}. ${q.q}</p> +
-          q.o.map((opt, j) => <label><input type='radio' name='q${i}' value='${j}'> ${opt}</label><br>).join('') + '</div>';
-      });
-      document.getElementById('next').classList.remove('hidden');
-    }
-
-    function evaluateLevel() {
-      let correct = 0;
-      currentQuestions.forEach((q, i) => {
-        const selected = document.querySelector(input[name='q${i}']:checked);
-        if (selected && parseInt(selected.value) === q.a) correct++;
-      });
-
-      totalCorrect += correct;
-      totalQuestions += currentQuestions.length;
-
-      const resultDiv = document.getElementById("result");
-      const praise = praiseMessages[Math.floor(Math.random() * praiseMessages.length)];
-
-      if (correct >= 5) {
-        resultDiv.innerHTML = ${praise} Passed Level ${levels[currentLevelIndex]} (${correct}/${currentQuestions.length} correct). Moving to next level.;
-        currentLevelIndex++;
-        if (currentLevelIndex < levels.length) {
-          setTimeout(() => renderLevel(levels[currentLevelIndex]), 2000);
-        } else {
-          showFinalResult();
-        }
-      } else {
-        resultDiv.innerHTML = Failed Level ${levels[currentLevelIndex]} (${correct}/${currentQuestions.length} correct). Test ended.;
-        showFinalResult();
+    function openAdmin() {
+      const password = prompt("Enter admin password:");
+      if (password === "MAVERICK") {
+        window.location.href = "admin.html";
+      } else if (password) {
+        alert("❌ Incorrect password. Access denied.");
       }
     }
-
-    function showFinalResult() {
-      clearInterval(timerInterval);
-      const elapsed = Date.now() - startTime;
-      const timeTakenMin = Math.round(elapsed / 60000);
-      let level = "Below A1";
-      if (totalCorrect >= 51) level = "C2";
-      else if (totalCorrect >= 41) level = "C1";
-      else if (totalCorrect >= 31) level = "B2";
-      else if (totalCorrect >= 21) level = "B1";
-      else if (totalCorrect >= 11) level = "A2";
-      else if (totalCorrect >= 5) level = "A1";
-
-      const praise = praiseMessages[Math.floor(Math.random() * praiseMessages.length)];
-
-      document.getElementById("quiz").innerHTML = "";
-      document.getElementById("next").classList.add("hidden");
-      document.getElementById("result").innerHTML += <br><br>${praise}<br>Your estimated English level is: <strong>${level}</strong><br>Total correct: ${totalCorrect}/${totalQuestions}<br>Time taken: ${timeTakenMin} minutes.;
-    }
-
-    document.getElementById("next").onclick = evaluateLevel;
-    renderLevel(levels[currentLevelIndex]);
-
-    // === ADMIN EDITOR ===
-    const editorDiv = document.getElementById("editor");
-
-    function renderEditor() {
-      editorDiv.innerHTML = "<h2>Question Editor</h2>";
-      levels.forEach(level => {
-        const levelDiv = document.createElement("div");
-        levelDiv.innerHTML = <h3>${level}</h3>;
-        questionBank[level].forEach((q, i) => {
-          const qDiv = document.createElement("div");
-          qDiv.className = "editor-question";
-
-          const questionInput = document.createElement("input");
-          questionInput.type = "text";
-          questionInput.value = q.q;
-          questionInput.oninput = () => { q.q = questionInput.value; };
-
-          const optionsDiv = document.createElement("div");
-          q.o.forEach((opt, j) => {
-            const optInput = document.createElement("input");
-            optInput.type = "text";
-            optInput.value = opt;
-            optInput.oninput = () => { q.o[j] = optInput.value; };
-            optionsDiv.appendChild(optInput);
-            optionsDiv.appendChild(document.createElement("br"));
-          });
-
-          const correctInput = document.createElement("input");
-          correctInput.type = "number";
-          correctInput.min = 0;
-          correctInput.max = 3;
-          correctInput.value = q.a;
-          correctInput.oninput = () => { q.a = parseInt(correctInput.value); };
-
-          const removeBtn = document.createElement("span");
-          removeBtn.className = "remove-btn";
-          removeBtn.textContent = "❌ Remove";
-          removeBtn.onclick = () => { removeQuestion(level, i); };
-
-          qDiv.appendChild(document.createTextNode("Question: "));
-          qDiv.appendChild(questionInput);
-          qDiv.appendChild(document.createElement("br"));
-          qDiv.appendChild(document.createTextNode("Options:"));
-          qDiv.appendChild(document.createElement("br"));
-          qDiv.appendChild(optionsDiv);
-          qDiv.appendChild(document.createTextNode("Correct Answer: "));
-          qDiv.appendChild(correctInput);
-          qDiv.appendChild(removeBtn);
-
-          levelDiv.appendChild(qDiv);
-        });
-        const addBtn = document.createElement("button");
-        addBtn.textContent = "+ Add Question";
-        addBtn.onclick = () => addQuestion(level);
-        levelDiv.appendChild(addBtn);
-
-        editorDiv.appendChild(levelDiv);
-      });
-    }
-
-    function addQuestion(level) {
-      questionBank[level].push({ q: "New Question", o: ["Option1", "Option2", "Option3", "Option4"], a: 0 });
-      renderEditor();
-    }
-
-    function removeQuestion(level, index) {
-      questionBank[level].splice(index, 1);
-      renderEditor();
-    }
-
-    document.getElementById("adminLogin").onclick = () => {
-      const pass = prompt("Enter admin password:");
-      if (pass === "MAVERICK") {
-        editorDiv.classList.remove("hidden");
-        renderEditor();
-      } else {
-        alert("Wrong password");
-      }
-    };
   </script>
+
 </body>
 </html>
+
+
